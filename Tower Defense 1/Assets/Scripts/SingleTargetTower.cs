@@ -8,8 +8,9 @@ namespace TowerDefense.Towers
     {
         BaseTowerStats instance;
         public string robotTag = "Robot";
-        public Transform target;
+        private Transform target;
         public Transform gunPart;
+        public float turnSpeed = 10f;
 
         private void Awake()
         {
@@ -25,7 +26,7 @@ namespace TowerDefense.Towers
         // Start is called before the first frame update
         void Start()
         {
-            InvokeRepeating("UpdateTarget", 0f, 0.5f);
+            InvokeRepeating("FindTarget", 0f, 0.5f);
         }
 
         // Update is called once per frame
@@ -35,12 +36,12 @@ namespace TowerDefense.Towers
             {
                 return;
             }
-            else
-            {
-                target = null;
-            }
+            
 
-            Vector3 direction = target.position - target.position;
+            Vector3 direction = target.position - transform.position;
+            Quaternion lookRot = Quaternion.LookRotation(direction);
+            Vector3 rot = Quaternion.Lerp(gunPart.rotation,lookRot,Time.deltaTime * turnSpeed).eulerAngles;
+            gunPart.rotation = Quaternion.Euler(0f,rot.y,0f);
         }
         public void ShootEnemy()
         {
@@ -48,9 +49,9 @@ namespace TowerDefense.Towers
         }
         void FindTarget()
         {
-            GameObject[] robots = GameObject.FindGameObjectsWithTag(robotTag);
+            GameObject[] robots = GameObject.FindGameObjectsWithTag(robotTag); // looks through gameobject with via Tag
             float shortestDistance = Mathf.Infinity;// stores the shortest distancce to an enemy
-            GameObject nearestEnemy = null;
+            GameObject nearestEnemy = null; // sets the varible to null
             foreach (GameObject robot in robots)
             {
                 float distanceToRobot = Vector3.Distance(transform.position, robot.transform.position);
@@ -65,20 +66,18 @@ namespace TowerDefense.Towers
             {
                 target = nearestEnemy.transform;
             }
+            else
+            {
+                target = null;
+            }
             
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (instance.targetInsight == true)
-            {
-                
-            }
-        }
+        
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, range);
+            Gizmos.DrawWireSphere(transform.position, range); // When the object with this script is selected a wire sphere is drawn via the position of the object and the range 
         }
 
     }
