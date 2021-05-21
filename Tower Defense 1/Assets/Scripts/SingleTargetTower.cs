@@ -11,6 +11,9 @@ namespace TowerDefense.Towers
         private Transform target;
         public Transform gunPart;
         public float turnSpeed = 10f;
+        private float fireCD = 0f;
+        public GameObject ammoType;
+        public Transform barrelPoint;
 
         private void Awake()
         {
@@ -42,10 +45,23 @@ namespace TowerDefense.Towers
             Quaternion lookRot = Quaternion.LookRotation(direction);
             Vector3 rot = Quaternion.Lerp(gunPart.rotation,lookRot,Time.deltaTime * turnSpeed).eulerAngles;
             gunPart.rotation = Quaternion.Euler(0f,rot.y,0f);
+
+            if (fireCD <= 0f)
+            {
+                ShootEnemy();
+                fireCD = 1f / instance.fireRate;
+            }
+            fireCD -= Time.deltaTime;
         }
         public void ShootEnemy()
         {
-
+            //Debug.Log("Shot Fired");
+            GameObject plasmaGO = (GameObject) Instantiate(ammoType, barrelPoint.position, barrelPoint.rotation);
+            Plasma plasma = plasmaGO.GetComponent<Plasma>();
+            if (plasma != null)
+            {
+                plasma.Pursue(target);
+            }
         }
         void FindTarget()
         {
