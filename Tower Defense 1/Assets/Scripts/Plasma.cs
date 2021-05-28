@@ -4,6 +4,7 @@ public class Plasma : MonoBehaviour
 {
     private Transform target;
     public float speed = 70f;
+    public float blastEffect = 0f;
     public GameObject impactEffect;
     public void Pursue(Transform _target)
     {
@@ -28,11 +29,40 @@ public class Plasma : MonoBehaviour
             return;
         }
         transform.Translate(direction.normalized * disthisFrame, Space.World);
+        transform.LookAt(target);
     }
     void TargetHit()
     {
         GameObject plasmaEffect = (GameObject) Instantiate(impactEffect, transform.position, transform.rotation);
-        Destroy(plasmaEffect, 2f);
+        Destroy(plasmaEffect, 3.5f);
+        if (blastEffect> 0f)
+        {
+            Explode();
+        }
+        else
+        {
+            Damage(target);
+        }
         Destroy(gameObject);
+    }
+    void Damage(Transform _robot)
+    {
+        Destroy(_robot.gameObject);
+    }
+    void Explode()
+    {
+        Collider[] robotsHit = Physics.OverlapSphere(transform.position, blastEffect);
+        foreach (Collider target in robotsHit)
+        {
+            if (target.tag == "Robot")
+            {
+                Damage(target.transform);
+            }
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, blastEffect);
     }
 }
