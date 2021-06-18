@@ -9,6 +9,8 @@ public class BaseTowerStats : MonoBehaviour
     public float damage = 15f;
     public bool targetInsight = false;
     public float range = 15f;
+    public bool railTrue = false;
+    public LineRenderer beam;
 
     #endregion
 }

@@ -14,6 +14,7 @@ namespace TowerDefense.Towers
         private float fireCD = 0f;
         public GameObject ammoType;
         public Transform barrelPoint;
+        public ParticleSystem railEffect;
 
         private void Awake()
         {
@@ -27,31 +28,43 @@ namespace TowerDefense.Towers
             }
         }
         // Start is called before the first frame update
-        void Start()
+        public void Start()
         {
             InvokeRepeating("FindTarget", 0f, 0.5f);
         }
 
         // Update is called once per frame
-        void Update()
+        public void Update()
         {
             if (target == null)
             {
+                if (instance.railTrue)
+                {
+                    if (instance.beam.enabled)
+                    {
+                        instance.beam.enabled = false;
+                        railEffect.Stop();
+                    }
+                }
                 return;
             }
-            
+            TargetAcquired();
 
-            Vector3 direction = target.position - transform.position;
-            Quaternion lookRot = Quaternion.LookRotation(direction);
-            Vector3 rot = Quaternion.Lerp(gunPart.rotation,lookRot,Time.deltaTime * turnSpeed).eulerAngles;
-            gunPart.rotation = Quaternion.Euler(0f,rot.y,0f);
-
-            if (fireCD <= 0f)
+            if (instance.railTrue)
             {
-                ShootEnemy();
-                fireCD = 1f / instance.fireRate;
+                Railgun();
             }
-            fireCD -= Time.deltaTime;
+            else
+            {
+                if (fireCD <= 0f)
+                {
+                    ShootEnemy();
+                    fireCD = 1f / instance.fireRate;
+                }
+                fireCD -= Time.deltaTime;
+            }
+
+            
         }
         public void ShootEnemy()
         {
@@ -88,7 +101,31 @@ namespace TowerDefense.Towers
             }
             
         }
-        
+        void TargetAcquired()
+        {
+            Vector3 direction = target.position - transform.position;
+            Quaternion lookRot = Quaternion.LookRotation(direction);
+            Vector3 rot = Quaternion.Lerp(gunPart.rotation, lookRot, Time.deltaTime * turnSpeed).eulerAngles;
+            gunPart.rotation = Quaternion.Euler(0f, rot.y, 0f);
+        }
+        void Railgun()
+        {
+            if (!instance.beam.enabled)
+            {
+                instance.beam.enabled = true;
+                railEffect.Play();
+
+            }
+            instance.beam.SetPosition(0, barrelPoint.position);
+            instance.beam.SetPosition(1, target.position);
+            Vector3 direction = barrelPoint.position - target.position;
+            railEffect.transform.rotation = Quaternion.LookRotation(direction);
+            railEffect.transform.position = target.position + direction.normalized * 0.5f;
+            
+
+        }
+
+
 
         private void OnDrawGizmosSelected()
         {
