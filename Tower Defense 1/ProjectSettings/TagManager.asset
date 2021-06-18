@@ -5,11 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Robot
-<<<<<<< HEAD
   - END
-=======
-  - Buildable
->>>>>>> 2a2b3ad7e5de3e539b72c0da99fd705f265727fb
   layers:
   - Default
   - TransparentFX
