@@ -5,9 +5,9 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
-public class Grunt : Enemies
+public class Tank : Enemies
 {
-    public Grunt grunt;
+    public Tank tank;
     Enemies enemy;
     public GruntSpawn ded;
     [SerializeField]
@@ -26,7 +26,7 @@ public class Grunt : Enemies
 
         // Tell the agent to move to a random position in the scene waypoints
         agent.SetDestination(SeventhPoint.Position);
-
+        
     }
 
     private void Update()
@@ -49,4 +49,3 @@ public class Grunt : Enemies
         yield return (_Delay);
     }
 }
-
