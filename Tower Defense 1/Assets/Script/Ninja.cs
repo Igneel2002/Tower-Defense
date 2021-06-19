@@ -5,11 +5,11 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
 
-public class Tank : Enemies
+public class Ninja : Enemies
 {
-    public Tank tank;
-    Enemies enemy;
+    public Ninja ninja;
     MENU menu;
+    Enemies enemy;
     [SerializeField]
     public GameObject[] EnemyPOS;
 
@@ -19,6 +19,7 @@ public class Tank : Enemies
     // Start is called before the first frame update
     void Awake()
     {
+
         
             agent = gameObject.GetComponent<NavMeshAgent>();
             // FindOfObjectsOfType gets every instance of this component in the scene
@@ -27,7 +28,7 @@ public class Tank : Enemies
             // Tell the agent to move to a random position in the scene waypoints
             agent.SetDestination(SeventhPoint.Position);
         
-        
+
     }
 
     private void Update()
@@ -43,7 +44,7 @@ public class Tank : Enemies
     public IEnumerator Delay(float _Delay)
     {
         // take damage from total health in game
-        GruntSpawn.LIFE -= 10;
+        GruntSpawn.LIFE -= 2;
         // destroy enemy
         Destroy(gameObject);
         // Make coroutine work

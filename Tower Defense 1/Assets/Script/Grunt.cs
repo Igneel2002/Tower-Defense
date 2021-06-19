@@ -8,8 +8,8 @@ using TMPro;
 public class Grunt : Enemies
 {
     public Grunt grunt;
+    MENU menu;
     Enemies enemy;
-    public GruntSpawn ded;
     [SerializeField]
     public GameObject[] EnemyPOS;
 
@@ -17,15 +17,17 @@ public class Grunt : Enemies
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        // FindOfObjectsOfType gets every instance of this component in the scene
-        waypoints = FindObjectsOfType<Waypoint>();
+        
+            agent = gameObject.GetComponent<NavMeshAgent>();
+            // FindOfObjectsOfType gets every instance of this component in the scene
+            waypoints = FindObjectsOfType<Waypoint>();
 
-        // Tell the agent to move to a random position in the scene waypoints
-        agent.SetDestination(SeventhPoint.Position);
+            // Tell the agent to move to a random position in the scene waypoints
+            agent.SetDestination(SeventhPoint.Position);
+        
 
     }
 
@@ -42,7 +44,7 @@ public class Grunt : Enemies
     public IEnumerator Delay(float _Delay)
     {
         // take damage from total health in game
-        ded.LIFE -= 2;
+        GruntSpawn.LIFE -= 5;
         // destroy enemy
         Destroy(gameObject);
         // Make coroutine work

@@ -7,6 +7,7 @@ public class Enemies : MonoBehaviour
 {
     public GameObject Grunt2;
     public GameObject Tank2;
+    public GameObject Ninja2;
 
     [HideInInspector]
     public NavMeshAgent agent;

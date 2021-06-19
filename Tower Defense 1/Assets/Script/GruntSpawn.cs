@@ -13,7 +13,7 @@ public class GruntSpawn : MonoBehaviour
     public GameObject SP1;
     [SerializeField]
     private GameObject start;
-    public float LIFE = 100;
+    public static float LIFE = 100;
     int spawnthesemany = 5;
     // Start is called before the first frame update
     void Start()
@@ -46,7 +46,7 @@ public class GruntSpawn : MonoBehaviour
             Enemies enemies = grunt[loop];
             
         }
-        LifeCounter.text = LIFE.ToString();
+        LifeCounter.text = "Life " + (int)LIFE;
     }
 
     
