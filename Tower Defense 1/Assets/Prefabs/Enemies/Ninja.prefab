@@ -132,10 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d8147cffbfb23e409755b435ce811b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grunt2: {fileID: 0}
-  Tank2: {fileID: 0}
-  Ninja2: {fileID: 0}
+  Grunt2: {fileID: 1823846471611703650, guid: ed8d7b8a8a5b99f4cb0e6fc25aa48ff5, type: 3}
+  Tank2: {fileID: 9139816869356955205, guid: facc66b87037fa34781517ddd53ad2e9, type: 3}
+  Ninja2: {fileID: 1479840203514277061}
   agent: {fileID: 0}
   waypoints: []
-  ninja: {fileID: 0}
+  ninja: {fileID: 269415574023569611}
   EnemyPOS: []

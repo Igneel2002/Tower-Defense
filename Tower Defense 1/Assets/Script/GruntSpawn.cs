@@ -8,6 +8,7 @@ using TMPro;
 public class GruntSpawn : MonoBehaviour
 {
     List<Enemies> grunt = new List<Enemies>();
+    MENU menu;
     public Enemies[] PrefabEnemy;
     public Text LifeCounter;
     public GameObject SP1;
@@ -47,6 +48,15 @@ public class GruntSpawn : MonoBehaviour
             
         }
         LifeCounter.text = "Life " + (int)LIFE;
+
+        if (LIFE <= 0)
+        {
+            foreach(Transform child in transform)
+            {
+                Destroy(child.gameObject);
+                menu.Death.SetActive(true);
+            }
+        }
     }
 
     
@@ -60,7 +70,7 @@ public class GruntSpawn : MonoBehaviour
         for (int loop = 0; loop < spawnthesemany; loop++)
         {
             // Create enemy
-            Enemies spawnedGrunt = Instantiate(PrefabEnemy[Random.Range(0,PrefabEnemy.Length)], SP1.transform.position, Quaternion.identity);
+            Enemies spawnedGrunt = Instantiate(PrefabEnemy[Random.Range(0,PrefabEnemy.Length)], SP1.transform.position, Quaternion.identity, transform);
             grunt.Add(spawnedGrunt);
             // Put enemy in correct position
             transform.position = SP1.transform.position;

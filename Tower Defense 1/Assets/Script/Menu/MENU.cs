@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class MENU : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject start;
+    public GameObject Death;
+    public GameObject Begin;
+    public GameObject Game;
     [SerializeField]
     private GameObject pause;
     public bool paus;
@@ -14,19 +15,31 @@ public class MENU : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0;
-        start.SetActive(true);
+        Begin.SetActive(true);
+        Death.SetActive(false);
+        pause.SetActive(false);
+        Game.SetActive(false);
         paus = false;
     }
 
-    public void START()
+    public void BEGIN()
     {
-        start.SetActive(false);
+        Begin.SetActive(false);
+        Time.timeScale = 1;
+        Game.SetActive(true);
+    }
+
+    public void RESTART()
+    {
+        Death.SetActive(false);
         paus = true;
+        Time.timeScale = 1;
     }
 
     public void RESUME()
     {
         pause.SetActive(false);
+        Game.SetActive(true);
         Time.timeScale = 1;
         StartCoroutine(Delay2(0.1f));
     }
@@ -40,6 +53,7 @@ public class MENU : MonoBehaviour
             {
                 Time.timeScale = 0;
                 pause.SetActive(true);
+                Game.SetActive(false);
                 StartCoroutine(Delay(0.1f));
             }
 
@@ -47,6 +61,7 @@ public class MENU : MonoBehaviour
             {
                 Time.timeScale = 1;
                 pause.SetActive(false);
+                Game.SetActive(true);
                 StartCoroutine(Delay2(0.1f));
             }
         }

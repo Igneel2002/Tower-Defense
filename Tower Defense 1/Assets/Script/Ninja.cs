@@ -19,14 +19,12 @@ public class Ninja : Enemies
     // Start is called before the first frame update
     void Awake()
     {
+        agent = gameObject.GetComponent<NavMeshAgent>();
+        // FindOfObjectsOfType gets every instance of this component in the scene
+        waypoints = FindObjectsOfType<Waypoint>();
 
-        
-            agent = gameObject.GetComponent<NavMeshAgent>();
-            // FindOfObjectsOfType gets every instance of this component in the scene
-            waypoints = FindObjectsOfType<Waypoint>();
-
-            // Tell the agent to move to a random position in the scene waypoints
-            agent.SetDestination(SeventhPoint.Position);
+        // Tell the agent to move to a random position in the scene waypoints
+        agent.SetDestination(SeventhPoint.Position);
         
 
     }
